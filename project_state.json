@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "AgendaPro Local AI — a small local business management app (barbershop, pet shop, salon, clinic) with modules for scheduling, client management, financial control, retention suggestions, and automated messages. Outputs structured JSON with status, module name, data, insights, and recommended actions.",
+  "architectural_notes": [
+    "All module outputs must follow structured format: status, modulo, dados (JSON), insights (list), acoes_recomendadas (list)",
+    "System operates with input data: clientes (JSON), agendamentos (JSON), financeiro (JSON), data_atual (YYYY-MM-DD)",
+    "Rule: never invent data — return 'não encontrado' if information is missing",
+    "Priority goals: increase revenue and client retention",
+    "Module 1 (Agenda): output includes agendamentos [{hora, cliente, servico, status}], horarios_livres, conflitos, insights, acoes_recomendadas",
+    "Module 2 (CRM): output includes inativos [{nome, dias_sem_voltar}], frequentes [{nome, visitas}], vip [{nome, ticket_medio}]",
+    "Module 3 (Financeiro): output includes faturamento_total, ticket_medio, top_servicos [{nome, quantidade}]",
+    "Module 4 (Reativação): personalized re-engagement messages by client name, max 2 lines, WhatsApp-ready",
+    "Module 5 (Lembretes): auto reminders at 24h and 2h before appointment, friendly tone"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-build-a-scheduling-agenda-frontend-module-with-a-calendar-style-daily-and-weekly-view-displaying-appointments-allow-users-to-create-edit-and-cancel-appointments-directly-from-the-calendar-show-appointment-status-with-visual-indicators",
+      "title": "Build a scheduling/agenda frontend module with a calendar-style daily and weekly view displaying appointments. Allow users to create, edit, and cancel appointments directly from the calendar. Show appointment status with visual indicators.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-client-management-frontend-module-with-a-searchable-filterable-list-of-all-clients-include-a-client-detail-panel-showing-visit-history-total-spend-and-notes-allow-adding-and-editing-client-records",
+      "title": "Build a client management frontend module with a searchable, filterable list of all clients. Include a client detail panel showing visit history, total spend, and notes. Allow adding and editing client records.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-financial-control-frontend-module-showing-an-income-expense-summary-dashboard-with-totals-and-net-balance-for-the-current-month-include-a-transaction-log-with-add-edit-delete-capability-and-a-simple-bar-chart-of-weekly-revenue",
+      "title": "Build a financial control frontend module showing an income/expense summary dashboard with totals and net balance for the current month. Include a transaction log with add/edit/delete capability and a simple bar chart of weekly revenue.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-retention-insights-frontend-module-that-displays-a-list-of-at-risk-clients-inactive-30-days-and-top-clients-each-with-a-one-click-action-to-generate-and-copy-a-re-engagement-message-template",
+      "title": "Build a retention insights frontend module that displays a list of at-risk clients (inactive 30+ days) and top clients, each with a one-click action to generate and copy a re-engagement message template.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-a-cohesive-visual-theme-for-agendapro-local-ai-using-a-warm-professional-palette-e-g-deep-charcoal-backgrounds-with-amber-gold-accents-and-clean-white-cards-typography-should-feel-modern-and-trustworthy-apply-the-theme-consistently-across-all-modules-with-a-fixed-sidebar-navigation-linking-agenda-clients-financials-and-retention",
+      "title": "Design a cohesive visual theme for AgendaPro Local AI using a warm, professional palette (e.g., deep charcoal backgrounds with amber/gold accents and clean white cards). Typography should feel modern and trustworthy. Apply the theme consistently across all modules with a fixed sidebar navigation linking Agenda, Clients, Financials, and Retention.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-automatic-reminders-frontend-page-module-accessible-from-the-sidebar-it-must-display-a-list-of-upcoming-appointment-reminders-grouped-by-type-24h-and-2h-showing-client-name-scheduled-time-and-the-generated-message-each-reminder-entry-must-have-a-copy-button-to-copy-the-message-to-the-clipboard-the-page-should-call-the-generatereminders-backend-function-and-display-results-in-the-structured-output-format-status-banner-module-label-reminders-list-and-an-insights-panel-noting-that-reminders-reduce-no-shows",
+      "title": "Build an Automatic Reminders frontend page/module accessible from the sidebar. It must display a list of upcoming appointment reminders grouped by type (24h and 2h), showing client name, scheduled time, and the generated message. Each reminder entry must have a 'Copy' button to copy the message to the clipboard. The page should call the `generateReminders` backend function and display results in the structured output format: status banner, module label, reminders list, and an insights panel noting that reminders reduce no-shows.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-agenda-module-to-surface-structured-daily-insights-inline-on-the-agendapage-below-the-calendar-display-a-summary-panel-showing-today-s-appointments-ordered-by-time-identified-free-time-slots-gaps-between-appointments-any-scheduling-conflicts-overlapping-appointments-and-at-least-one-actionable-insight-e-g-idle-slot-between-2-pm-and-4-pm-consider-sending-a-promotion-this-panel-should-be-computed-client-side-from-the-existing-appointments-query-data",
+      "title": "Enhance the Agenda module to surface structured daily insights inline on the AgendaPage. Below the calendar, display a summary panel showing: today's appointments ordered by time, identified free time slots (gaps between appointments), any scheduling conflicts (overlapping appointments), and at least one actionable insight (e.g., 'Idle slot between 2 PM and 4 PM — consider sending a promotion'). This panel should be computed client-side from the existing appointments query data.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-clients-module-to-display-a-structured-crm-insights-panel-on-the-clientspage-the-panel-must-show-inactive-clients-no-visit-in-30-days-with-days-since-last-visit-visit-frequency-ranking-for-frequent-clients-and-vip-clients-identified-by-highest-average-ticket-total-spend-visits-display-these-three-groups-as-labeled-sections-with-counts-and-a-recommended-action-per-group-e-g-reactivate-with-personalized-message-compute-from-existing-client-and-appointment-data-client-side",
+      "title": "Enhance the Clients module to display a structured CRM insights panel on the ClientsPage. The panel must show: inactive clients (no visit in 30+ days) with days since last visit, visit frequency ranking for frequent clients, and VIP clients identified by highest average ticket (total spend / visits). Display these three groups as labeled sections with counts and a recommended action per group (e.g., 'Reactivate with personalized message'). Compute from existing client and appointment data client-side.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-financials-module-to-display-a-structured-financial-insights-panel-on-the-financialspage-the-panel-must-show-total-revenue-for-the-selected-period-average-ticket-value-total-income-number-of-income-transactions-top-services-categories-by-transaction-count-and-at-least-one-insight-e-g-service-x-is-the-most-profitable-compute-these-metrics-client-side-from-existing-financial-records-data-and-render-as-a-labeled-summary-beneath-the-existing-summary-cards",
+      "title": "Enhance the Financials module to display a structured financial insights panel on the FinancialsPage. The panel must show: total revenue for the selected period, average ticket value (total income / number of income transactions), top services/categories by transaction count, and at least one insight (e.g., 'Service X is the most profitable'). Compute these metrics client-side from existing financial records data and render as a labeled summary beneath the existing summary cards.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Agenda/scheduling module to organize appointments",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Client management module",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Financial control module",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Client retention suggestions module",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Automated messages generation module",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Create a backend data model and CRUD operations for clients, including fields: id, name, phone, email, lastVisit (timestamp), totalVisits (Nat), notes (Text), and businessType (barber, petshop, salon, clinic).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Create a backend data model and CRUD operations for appointments (agendamentos), including fields: id, clientId, service (Text), dateTime (Int timestamp), duration (Nat minutes), status (scheduled, completed, cancelled), and notes (Text).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Create a backend data model and CRUD operations for financial records, including fields: id, type (income, expense), amount (Float), category (Text), date (Int timestamp), description (Text), and linkedAppointmentId (optional Text).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Implement a backend query function that analyzes client visit history and returns retention insights: identify clients who have not visited in over 30 days, rank top clients by visit frequency, and surface clients most likely to churn.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Implement a backend function that generates pre-written re-engagement message templates for a given client, using their name and days since last visit. Templates should cover: comeback offer, birthday greeting (if date available), and general check-in.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Automatic appointment reminders module: generate 24h and 2h-before reminders with friendly tone, output client/time/message list for WhatsApp sending",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add a backend function `generateReminders` that, given the list of upcoming appointments, produces reminder records for each appointment: one reminder 24 hours before and one 2 hours before the scheduled time. Each reminder record must include the client name, appointment time, and a friendly pre-written message suitable for WhatsApp. Expose this as a query that returns an array of `{ clientName: Text; appointmentTime: Int; message: Text; reminderType: Text }` records.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "AgendaPro Local AI",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

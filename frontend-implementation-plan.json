@@ -1,0 +1,112 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add Automated Reminders Module & Enhance Agenda/CRM/Financial/Retention with Structured Insights",
+  "requirements": [
+    {
+      "id": "REQ-12",
+      "summary": "Build an Automatic Reminders frontend page/module with structured output showing upcoming appointment reminders grouped by type",
+      "acceptanceCriteria": [
+        "A new 'Reminders' page is accessible from the sidebar navigation.",
+        "Reminders are grouped into '24h Before' and '2h Before' sections.",
+        "Each reminder card shows client name, appointment time, and the pre-written message.",
+        "A 'Copy' button copies the message to the clipboard with a toast confirmation.",
+        "An insights panel at the bottom notes that reminders reduce appointment no-shows.",
+        "Loading skeleton is shown while data is being fetched."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/RemindersPage.tsx",
+          "operation": "create",
+          "description": "Create RemindersPage component that calls the backend generateReminders query and displays reminders grouped by type (24h and 2h). Include status banner at top, module label, reminder cards showing clientName/appointmentTime/message with copy-to-clipboard buttons (using toast for confirmation), and an insights panel noting that reminders reduce no-shows. Include loading skeleton while fetching data. Use existing UI components from frontend/src/components/ui for cards, buttons, and skeletons."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add useReminders query hook that calls actor.generateReminders() and returns the array of Reminder objects. Include proper error handling and staleTime configuration consistent with existing query hooks in this file."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the /reminders route in the router configuration, importing RemindersPage and adding it alongside existing routes (dashboard, agenda, clients, financials, retention). Ensure the route is accessible from the main router tree."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Add a 'Reminders' navigation link in the sidebar navigation array with an appropriate icon (e.g., Bell), positioned after Retention and before Settings/other utility links. Ensure the link highlights when the /reminders route is active using the existing nav link styling pattern."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Enhance the Agenda module to display structured daily insights inline showing appointments, free slots, conflicts, and actionable recommendations",
+      "acceptanceCriteria": [
+        "AgendaPage displays a daily insights summary panel below or beside the calendar.",
+        "Panel lists today's appointments sorted by time.",
+        "Free time slots (gaps ≥ 30 minutes) between appointments are identified and listed.",
+        "Overlapping appointments are flagged as conflicts with a warning indicator.",
+        "At least one insight message is shown for idle slots longer than 1 hour."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AgendaInsightsPanel.tsx",
+          "operation": "create",
+          "description": "Create AgendaInsightsPanel component that accepts today's appointments array as props and computes client-side insights: sorted list of today's appointments by time, free time slots (gaps ≥ 30 minutes between consecutive appointments), scheduling conflicts (overlapping appointments with warning indicator), and actionable insights for idle slots longer than 1 hour (e.g., 'Idle slot between 2 PM and 4 PM — consider sending a promotion'). Display each insight category as labeled sections using cards from frontend/src/components/ui. Use utility functions from frontend/src/lib/utils.ts for time formatting."
+        },
+        {
+          "path": "frontend/src/pages/AgendaPage.tsx",
+          "operation": "modify",
+          "description": "Import and render the AgendaInsightsPanel component below the AppointmentCalendar, passing the filtered today's appointments data. Ensure the panel receives the same appointments data already loaded by the existing useAppointments query. Position the panel in a complementary layout (e.g., side-by-side on large screens or stacked on mobile) using responsive grid or flex layout."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Enhance the Clients module to display structured CRM insights showing inactive, frequent, and VIP clients with recommended actions",
+      "acceptanceCriteria": [
+        "ClientsPage includes a CRM insights panel with three sections: Inactive, Frequent, and VIP.",
+        "Inactive section lists clients with no visit in 30+ days and shows days since last visit.",
+        "Frequent section ranks clients by total visit count.",
+        "VIP section identifies clients with the highest average spend per visit.",
+        "Each section includes a recommended action label.",
+        "Panel updates reactively when client data changes."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/CrmInsightsPanel.tsx",
+          "operation": "create",
+          "description": "Create CrmInsightsPanel component that accepts clients array and financial records array as props and computes client-side CRM insights: (1) Inactive clients (no visit in 30+ days) with days since last visit, (2) Frequent clients ranked by totalVisits descending, (3) VIP clients identified by highest average ticket (computed from linked financial records: total income / visit count). Display three labeled sections using cards, each with a count badge and a recommended action label (e.g., 'Reactivate with personalized message' for inactive, 'Reward loyalty program' for frequent, 'Offer premium services' for VIP). Use existing UI components from frontend/src/components/ui."
+        },
+        {
+          "path": "frontend/src/pages/ClientsPage.tsx",
+          "operation": "modify",
+          "description": "Import and render the CrmInsightsPanel component above or beside the client list panel. Pass the clients data from useClients query and financial records from useFinancialRecords query (ensure the query is called if not already present). Position the insights panel in a prominent location (e.g., top section or right sidebar) using responsive layout. Ensure the panel updates reactively when client or financial data changes by leveraging React Query's automatic re-renders."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Enhance the Financials module to display structured financial insights showing total revenue, average ticket, top services, and profitability insights",
+      "acceptanceCriteria": [
+        "FinancialsPage shows a financial insights panel below the summary cards.",
+        "Panel displays total revenue for the current period.",
+        "Average ticket value is computed and displayed.",
+        "Top 3 income categories are listed by transaction count.",
+        "At least one auto-generated insight highlights the most profitable category.",
+        "Panel is computed from existing financial records without additional backend calls."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/FinancialInsightsPanel.tsx",
+          "operation": "create",
+          "description": "Create FinancialInsightsPanel component that accepts financial records array as props and computes client-side financial insights for the current period: (1) Total revenue (sum of all income records), (2) Average ticket value (total income / number of income transactions), (3) Top 3 income categories by transaction count (group by category, count occurrences, sort descending), (4) At least one auto-generated insight (e.g., 'Service X is the most profitable — promote this service'). Render as a labeled summary panel with sections for each metric using cards from frontend/src/components/ui. Use formatCurrency from frontend/src/lib/utils.ts for monetary values."
+        },
+        {
+          "path": "frontend/src/pages/FinancialsPage.tsx",
+          "operation": "modify",
+          "description": "Import and render the FinancialInsightsPanel component below the existing FinancialSummaryCard component. Pass the financial records data from the existing useFinancialRecords query. Position the panel between the summary cards and the weekly revenue chart using consistent spacing and layout grid."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "frontend/src/App.tsx": "Main router setup with TanStack Router, now including a `/reminders` route pointing to `RemindersPage`, alongside all existing routes wrapped in `AppLayout`.",
+  "frontend/src/pages/DashboardPage.tsx": "Overview dashboard page showing key stats (total clients, today's appointments, monthly income, net balance), upcoming appointments list, and quick-access navigation cards to all modules.",
+  "frontend/src/pages/AgendaPage.tsx": "Agenda page now renders `AgendaInsightsPanel` alongside the `AppointmentCalendar` in a responsive side-by-side layout (stacked on mobile, side-by-side on xl screens).",
+  "frontend/src/components/AppLayout.tsx": "Persistent sidebar shell layout with navigation links; now includes a \"Lembretes\" (Bell icon) nav item pointing to `/reminders`, positioned after Retenção.",
+  "frontend/src/hooks/useQueries.ts": "All React Query hooks for backend operations (clients, appointments, financial records, retention, message templates), now with an added `useReminders` hook that calls `actor.generateReminders()` with a 5-minute stale time.",
+  "frontend/src/pages/RemindersPage.tsx": "New page that fetches reminders via `useReminders`, groups them into \"24h Before\" and \"2h Before\" sections, shows each reminder card with client name, appointment time, message, and a copy-to-clipboard button with toast confirmation, plus an insights panel at the bottom.",
+  "frontend/src/components/AgendaInsightsPanel.tsx": "New component that computes client-side agenda insights from today's appointments: sorted appointment list, free time slots (≥30 min gaps), scheduling conflicts with warning indicators, and idle-slot insights for gaps ≥1 hour.",
+  "frontend/src/components/CrmInsightsPanel.tsx": "New component that computes CRM insights from clients and financial records: inactive clients (>30 days), frequent clients ranked by visit count, and VIP clients by average ticket value, each with recommended action labels.",
+  "frontend/src/pages/ClientsPage.tsx": "Clients page now renders `CrmInsightsPanel` above the client list when data is loaded, passing both clients and financial records for full CRM insight computation.",
+  "frontend/src/components/FinancialInsightsPanel.tsx": "New component that computes financial insights from records: total revenue, average ticket, top 3 income categories by transaction count, and an auto-generated insight highlighting the most profitable service.",
+  "frontend/src/pages/FinancialsPage.tsx": "Financials page now renders `FinancialInsightsPanel` between the summary cards and the weekly revenue chart, passing the existing financial records data."
+}

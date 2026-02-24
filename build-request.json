@@ -1,0 +1,141 @@
+{
+  "kind": "build_request",
+  "title": "Add Automated Reminders Module & Enhance Agenda/CRM/Financial/Retention with Structured Insights",
+  "projectName": "AgendaPro Local AI",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-11",
+      "text": "Add a backend function `generateReminders` that, given the list of upcoming appointments, produces reminder records for each appointment: one reminder 24 hours before and one 2 hours before the scheduled time. Each reminder record must include the client name, appointment time, and a friendly pre-written message suitable for WhatsApp. Expose this as a query that returns an array of `{ clientName: Text; appointmentTime: Int; message: Text; reminderType: Text }` records.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Gerar lembrete 24h antes",
+          "Gerar lembrete 2h antes",
+          "Tom amigável"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes a `generateReminders` query that returns an array of reminder objects.",
+        "Each reminder includes clientName, appointmentTime, message (friendly tone), and reminderType ('24h' or '2h').",
+        "Two reminders are generated per appointment — one at T-24h and one at T-2h.",
+        "Messages are personalized with the client's name and appointment time."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Build an Automatic Reminders frontend page/module accessible from the sidebar. It must display a list of upcoming appointment reminders grouped by type (24h and 2h), showing client name, scheduled time, and the generated message. Each reminder entry must have a 'Copy' button to copy the message to the clipboard. The page should call the `generateReminders` backend function and display results in the structured output format: status banner, module label, reminders list, and an insights panel noting that reminders reduce no-shows.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "lembretes: [{cliente, horario, mensagem}]",
+          "Reduz faltas no agendamento",
+          "Enviar via WhatsApp automático"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A new 'Reminders' page is accessible from the sidebar navigation.",
+        "Reminders are grouped into '24h Before' and '2h Before' sections.",
+        "Each reminder card shows client name, appointment time, and the pre-written message.",
+        "A 'Copy' button copies the message to the clipboard with a toast confirmation.",
+        "An insights panel at the bottom notes that reminders reduce appointment no-shows.",
+        "Loading skeleton is shown while data is being fetched."
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Enhance the Agenda module to surface structured daily insights inline on the AgendaPage. Below the calendar, display a summary panel showing: today's appointments ordered by time, identified free time slots (gaps between appointments), any scheduling conflicts (overlapping appointments), and at least one actionable insight (e.g., 'Idle slot between 2 PM and 4 PM — consider sending a promotion'). This panel should be computed client-side from the existing appointments query data.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "horarios_livres: []",
+          "conflitos: []",
+          "Horário ocioso entre 14h e 16h",
+          "Enviar promoção para preencher horários livres"
+        ]
+      },
+      "acceptanceCriteria": [
+        "AgendaPage displays a daily insights summary panel below or beside the calendar.",
+        "Panel lists today's appointments sorted by time.",
+        "Free time slots (gaps ≥ 30 minutes) between appointments are identified and listed.",
+        "Overlapping appointments are flagged as conflicts with a warning indicator.",
+        "At least one insight message is shown for idle slots longer than 1 hour."
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Enhance the Clients module to display a structured CRM insights panel on the ClientsPage. The panel must show: inactive clients (no visit in 30+ days) with days since last visit, visit frequency ranking for frequent clients, and VIP clients identified by highest average ticket (total spend / visits). Display these three groups as labeled sections with counts and a recommended action per group (e.g., 'Reactivate with personalized message'). Compute from existing client and appointment data client-side.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "inativos: [{nome, dias_sem_voltar}]",
+          "frequentes: [{nome, visitas}]",
+          "vip: [{nome, ticket_medio}]",
+          "20% dos clientes não retornaram",
+          "Reativar clientes com mensagem personalizada"
+        ]
+      },
+      "acceptanceCriteria": [
+        "ClientsPage includes a CRM insights panel with three sections: Inactive, Frequent, and VIP.",
+        "Inactive section lists clients with no visit in 30+ days and shows days since last visit.",
+        "Frequent section ranks clients by total visit count.",
+        "VIP section identifies clients with the highest average spend per visit.",
+        "Each section includes a recommended action label.",
+        "Panel updates reactively when client data changes."
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Enhance the Financials module to display a structured financial insights panel on the FinancialsPage. The panel must show: total revenue for the selected period, average ticket value (total income / number of income transactions), top services/categories by transaction count, and at least one insight (e.g., 'Service X is the most profitable'). Compute these metrics client-side from existing financial records data and render as a labeled summary beneath the existing summary cards.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "faturamento_total: valor",
+          "ticket_medio: valor",
+          "top_servicos: [{nome, quantidade}]",
+          "Serviço X é o mais lucrativo",
+          "Promover serviço mais rentável"
+        ]
+      },
+      "acceptanceCriteria": [
+        "FinancialsPage shows a financial insights panel below the summary cards.",
+        "Panel displays total revenue for the current period.",
+        "Average ticket value is computed and displayed.",
+        "Top 3 income categories are listed by transaction count.",
+        "At least one auto-generated insight highlights the most profitable category.",
+        "Panel is computed from existing financial records without additional backend calls."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify immutable frontend paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "All Motoko logic must remain in the single backend/main.mo actor.",
+    "Re-engagement message generation already exists — do not duplicate that logic; the Reminders module is a separate feature for pre-appointment reminders only.",
+    "Insight panels on existing pages must be computed client-side from already-fetched data; do not add new backend queries unless strictly required."
+  ],
+  "nonGoals": [
+    "Actual WhatsApp API integration or automated message sending — copy-to-clipboard is sufficient.",
+    "Push notification or SMS delivery infrastructure.",
+    "Scheduling or cron-based background reminders — reminder generation is on-demand.",
+    "Changes to existing scheduling, client, financial, or retention core CRUD functionality."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

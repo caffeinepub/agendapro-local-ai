@@ -1,0 +1,105 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T23:28:38.348Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 5,
+    "implemented": 4,
+    "items": [
+      {
+        "id": "REQ-11",
+        "summary": "Add a backend function `generateReminders` that, given the list of upcoming appointments, produces reminder records for each appointment: one reminder 24 hours before and one 2 hours before the scheduled time. Each reminder record must include the client name, appointment time, and a friendly pre-written message suitable for WhatsApp. Expose this as a query that returns an array of `{ clientName: Text; appointmentTime: Int; message: Text; reminderType: Text }` records.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-12",
+        "summary": "Build an Automatic Reminders frontend page/module accessible from the sidebar. It must display a list of upcoming appointment reminders grouped by type (24h and 2h), showing client name, scheduled time, and the generated message. Each reminder entry must have a 'Copy' button to copy the message to the clipboard. The page should call the `generateReminders` backend function and display results in the structured output format: status banner, module label, reminders list, and an insights panel noting that reminders reduce no-shows.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/RemindersPage.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/App.tsx",
+          "frontend/src/components/AppLayout.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/RemindersPage.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/App.tsx",
+          "frontend/src/components/AppLayout.tsx"
+        ]
+      },
+      {
+        "id": "REQ-13",
+        "summary": "Enhance the Agenda module to surface structured daily insights inline on the AgendaPage. Below the calendar, display a summary panel showing: today's appointments ordered by time, identified free time slots (gaps between appointments), any scheduling conflicts (overlapping appointments), and at least one actionable insight (e.g., 'Idle slot between 2 PM and 4 PM — consider sending a promotion'). This panel should be computed client-side from the existing appointments query data.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/AgendaInsightsPanel.tsx",
+          "frontend/src/pages/AgendaPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/AgendaInsightsPanel.tsx",
+          "frontend/src/pages/AgendaPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-14",
+        "summary": "Enhance the Clients module to display a structured CRM insights panel on the ClientsPage. The panel must show: inactive clients (no visit in 30+ days) with days since last visit, visit frequency ranking for frequent clients, and VIP clients identified by highest average ticket (total spend / visits). Display these three groups as labeled sections with counts and a recommended action per group (e.g., 'Reactivate with personalized message'). Compute from existing client and appointment data client-side.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/CrmInsightsPanel.tsx",
+          "frontend/src/pages/ClientsPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/CrmInsightsPanel.tsx",
+          "frontend/src/pages/ClientsPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-15",
+        "summary": "Enhance the Financials module to display a structured financial insights panel on the FinancialsPage. The panel must show: total revenue for the selected period, average ticket value (total income / number of income transactions), top services/categories by transaction count, and at least one insight (e.g., 'Service X is the most profitable'). Compute these metrics client-side from existing financial records data and render as a labeled summary beneath the existing summary cards.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/FinancialInsightsPanel.tsx",
+          "frontend/src/pages/FinancialsPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/FinancialInsightsPanel.tsx",
+          "frontend/src/pages/FinancialsPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "build-request.json",
+    "build-template/README.md",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/AgendaInsightsPanel.tsx",
+    "frontend/src/components/AppLayout.tsx",
+    "frontend/src/components/CrmInsightsPanel.tsx",
+    "frontend/src/components/FinancialInsightsPanel.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/AgendaPage.tsx",
+    "frontend/src/pages/ClientsPage.tsx",
+    "frontend/src/pages/FinancialsPage.tsx",
+    "frontend/src/pages/RemindersPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

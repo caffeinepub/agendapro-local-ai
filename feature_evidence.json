@@ -1,0 +1,83 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-an-automatic-reminders-frontend-page-module-accessible-from-the-sidebar-it-must-display-a-list-of-upcoming-appointment-reminders-grouped-by-type-24h-and-2h-showing-client-name-scheduled-time-and-the-generated-message-each-reminder-entry-must-have-a-copy-button-to-copy-the-message-to-the-clipboard-the-page-should-call-the-generatereminders-backend-function-and-display-results-in-the-structured-output-format-status-banner-module-label-reminders-list-and-an-insights-panel-noting-that-reminders-reduce-no-shows",
+      "featureTitle": "Build an Automatic Reminders frontend page/module accessible from the sidebar. It must display a list of upcoming appointment reminders grouped by type (24h and 2h), showing client name, scheduled time, and the generated message. Each reminder entry must have a 'Copy' button to copy the message to the clipboard. The page should call the `generateReminders` backend function and display results in the structured output format: status banner, module label, reminders list, and an insights panel noting that reminders reduce no-shows.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/RemindersPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-enhance-the-agenda-module-to-surface-structured-daily-insights-inline-on-the-agendapage-below-the-calendar-display-a-summary-panel-showing-today-s-appointments-ordered-by-time-identified-free-time-slots-gaps-between-appointments-any-scheduling-conflicts-overlapping-appointments-and-at-least-one-actionable-insight-e-g-idle-slot-between-2-pm-and-4-pm-consider-sending-a-promotion-this-panel-should-be-computed-client-side-from-the-existing-appointments-query-data",
+      "featureTitle": "Enhance the Agenda module to surface structured daily insights inline on the AgendaPage. Below the calendar, display a summary panel showing: today's appointments ordered by time, identified free time slots (gaps between appointments), any scheduling conflicts (overlapping appointments), and at least one actionable insight (e.g., 'Idle slot between 2 PM and 4 PM — consider sending a promotion'). This panel should be computed client-side from the existing appointments query data.",
+      "files": [
+        "frontend/src/components/AgendaInsightsPanel.tsx",
+        "frontend/src/pages/AgendaPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-enhance-the-clients-module-to-display-a-structured-crm-insights-panel-on-the-clientspage-the-panel-must-show-inactive-clients-no-visit-in-30-days-with-days-since-last-visit-visit-frequency-ranking-for-frequent-clients-and-vip-clients-identified-by-highest-average-ticket-total-spend-visits-display-these-three-groups-as-labeled-sections-with-counts-and-a-recommended-action-per-group-e-g-reactivate-with-personalized-message-compute-from-existing-client-and-appointment-data-client-side",
+      "featureTitle": "Enhance the Clients module to display a structured CRM insights panel on the ClientsPage. The panel must show: inactive clients (no visit in 30+ days) with days since last visit, visit frequency ranking for frequent clients, and VIP clients identified by highest average ticket (total spend / visits). Display these three groups as labeled sections with counts and a recommended action per group (e.g., 'Reactivate with personalized message'). Compute from existing client and appointment data client-side.",
+      "files": [
+        "frontend/src/components/CrmInsightsPanel.tsx",
+        "frontend/src/pages/ClientsPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-enhance-the-financials-module-to-display-a-structured-financial-insights-panel-on-the-financialspage-the-panel-must-show-total-revenue-for-the-selected-period-average-ticket-value-total-income-number-of-income-transactions-top-services-categories-by-transaction-count-and-at-least-one-insight-e-g-service-x-is-the-most-profitable-compute-these-metrics-client-side-from-existing-financial-records-data-and-render-as-a-labeled-summary-beneath-the-existing-summary-cards",
+      "featureTitle": "Enhance the Financials module to display a structured financial insights panel on the FinancialsPage. The panel must show: total revenue for the selected period, average ticket value (total income / number of income transactions), top services/categories by transaction count, and at least one insight (e.g., 'Service X is the most profitable'). Compute these metrics client-side from existing financial records data and render as a labeled summary beneath the existing summary cards.",
+      "files": [
+        "frontend/src/components/FinancialInsightsPanel.tsx",
+        "frontend/src/pages/FinancialsPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
